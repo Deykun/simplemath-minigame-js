@@ -1,0 +1,120 @@
+*, html, body, p, h1, h2 {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Raleway', sans-serif;
+	text-align: center;
+	color: #fff;
+	background-color: #436f45;
+}
+
+#board {
+	position: relative;
+	width: 300px;
+	margin: auto;
+	margin-top: 20px;
+}
+
+.boxes div {
+	display: inline-block;
+	height: 100px;
+	width: 100px;
+	border-radius: 2px;
+
+	transform: scale(0.85);
+
+	font-size: 40px;
+	line-height: 100px;
+}
+
+.box div {
+	height: 70px;
+	width: 300px;
+	margin: 1px auto;
+	border-radius: 2px;
+
+	transform: scale(0.85);
+
+	font-size: 40px;
+	line-height: 70px;
+}
+
+.bonuses div {
+	height: 40px;
+	font-size: 16px;
+	line-height: 40px;
+	color: #284c29;
+	background-color: #93c959;
+}
+.score div {
+	height: 60px;
+	font-size: 25px;
+	line-height: 30px;
+}
+
+.score p {
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.head {
+	margin-top: 15px;
+}
+
+.head p {
+	width: 90%;
+	margin: 0 auto;
+	margin-bottom: 5px;
+
+	color: #fff;
+	text-align: left;
+}
+
+.head strong {
+color: #93c959;
+}
+
+.bonus {
+	float: right;
+	font-size: 65%;
+}
+
+.clickable > div {
+	background-color:#284c29;
+	transition: .1s ease-in-out;
+}
+
+.clickable > div:hover {
+	cursor: pointer;
+	transform: scale(1);}
+
+div.selected {
+	background-color:#29432a;
+}
+
+#oper, #numb {
+	margin-left: 15px;
+	vertical-align:middle;
+	color: #93c959;
+	font-size: 65%;
+}
+
+.end {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	width: 220px;
+	padding: 15px;
+	border-radius: 15px;
+	background-color: #93c959;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
+}

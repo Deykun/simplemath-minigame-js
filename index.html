@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SimpleMath - minigra</title>
+	<meta charset="utf-8">
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	<link href="game.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+
+
+<div id="board">
+	<section class="boxes score">
+		<div><span id="highscore">?</span><p>Rekord</p></div><div><span id="rounds">?</span><p>pozostało</p></div><div><span id="score">?</span><p>Wynik</p></div>
+	</section>
+	<section id="bonuses" class="boxes bonuses">
+		<div id="b0">?</div><div id="b1">?</div><div id="b2">?</div>
+	</section>
+	<section class="box head">
+			<p>Masz <strong>7 rund</strong> na zdobycie</p>
+			<p>największej ilości punktów.</p>
+			<p>Powodzenia!</p>
+			<div><span id="result">?</span><span id="oper">?</span><span id="numb">?</span></div>
+	</section>
+	<section id="operator" class="boxes clickable">
+		<div id="o0">?</div><div id="o1">?</div><div id="o2">?</div>
+	</section>
+	<section id="number" class="boxes clickable">
+		<div id="n0">?</div><div id="n1">?</div><div id="n2">?</div>
+	</section>
+	<section class="box clickable">
+		<div id="confirm">oblicz</div>
+	</section>
+<div class="end"><h2>Koniec!</h2><p>Zdobyłeś <strong id="endscore"></strong> punktów!</p><a href="#" id="again">Jeszcze raz?</a></div>
+</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
