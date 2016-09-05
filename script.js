@@ -4,33 +4,32 @@ function playAgain(){
 	$('.end').hide();
 }
 
-function newBonus(id){
-	var base = ['l. parzysta', 'l. nieparzysta', 'l. pierwsza', 'kwadrat', 'sześcian', 'zero', 'potęga 2'];
-	var output = base[Math.floor((Math.random() * base.length) + 0)];
-	$('#b'+id).text(output);
-	return output;
+function newChallenge(id){
+	var base = ['l. parzysta', 'l. nieparzysta', 'l. pierwsza', 'kwadrat', 'sześcian', 'zero', 'potęga 2', 'silnia'];
+	var tooltip = ['-2, 0, 2, 4', '-1, 1, 3, 5', '2, 3, 5, 7', '0, 1, 4, 9', '0, 1, 8, 27', '0', '0, 1, 2, 4, 8', '1, 2, 6, 24'];
+	var output = Math.floor((Math.random() * base.length) + 0);
+	$('#c'+id).text(base[output]);
+	$('#c'+id).attr('tooltip', tooltip[output]);
+	return base[output];
 }
 
 function newOperator(id, result){
 	var base = ['+', '-', '*'];
-	if (result > 100){ base[2] = '-'; }
+	if (result < -10 || result === 0){ base[1] = '+'; }
 	var output = base[Math.floor((Math.random() * base.length) + 0)];
 	$('#o'+id).text(output);
 	return output;
 }
 
 function newNumber(id){
-	var output = Math.floor((Math.random() * 5) + 1);
+	var output = Math.floor((Math.random() * 5) + 0);
+	if (result > 100){ output = Math.floor((Math.random() * 2) + 0); }
 	$('#n'+id).text(output);
 	return output;
 }
 
 function even(number) {
 	return number % 2 == 0;
-}
-
-function odd(number) {
-	return Math.abs(number % 2) == 1;
 }
 
 function prime(number) {
@@ -43,7 +42,7 @@ function prime(number) {
 }
 
 function square(number) {
-	var base = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961];
+	var base = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961];
 	var output;
 	if (base.indexOf(number) === -1){
 		output = false;
@@ -52,7 +51,7 @@ function square(number) {
 }
 
 function cube(number) {
-	var base = [1, 8, 27, 64, 125, 216, 343, 512, 729, 1000];
+	var base = [0, 1, 8, 27, 64, 125, 216, 343, 512, 729, 1000];
 	var output;
 	if (base.indexOf(number) === -1){
 		output = false;
@@ -69,6 +68,15 @@ function binary(number) {
    return output;
 }
 
+function factorial(number){
+	var base = [1, 2, 6, 24, 120, 720, 5040, 40320];
+	var output;
+	if (base.indexOf(number) === -1){
+		output = false;
+	}	else {output = true;}
+	 return output;
+}
+
 $(document).ready(function(){
 	(function play(){
 	if ($('#endscore').text() === ''){
@@ -83,10 +91,10 @@ $(document).ready(function(){
 	var result = 0;
 	$('#result').empty().append(result);
 
-	b = [], n = [], o = [];
-	b[0] = newBonus(0);
-	b[1] = newBonus(1);
-	b[2] = newBonus(2);
+	var c = [], n = [], o = [], cb = [];
+	c[0] = newChallenge(0);
+	c[1] = newChallenge(1);
+	c[2] = newChallenge(2);
 	o[0] = newOperator(0, 0);
 	o[1] = newOperator(1, 0);
 	o[2] = newOperator(2, 0);
@@ -96,28 +104,32 @@ $(document).ready(function(){
 
 	function addOperator() {
 		var id = this.id.replace('o', '');
-		$('#operator > div').removeClass('selected')
+		$('#operator > button').removeClass('selected')
 		$(this).addClass('selected');
 		$('#oper').empty().append(o[id]);
 	}
 
 	function addNumber() {
 		var id = this.id.replace('n', '');
-		$('#number > div').removeClass('selected')
+		$('#number > button').removeClass('selected')
 		$(this).addClass('selected');
 		$('#numb').empty().append(n[id]);
 	}
 
-	function bonusCount(name, pointsBase) {
+	function challengeCount(name, pointsBase) {
 		var output = [0,''];
-		var bonuslength = $('#bonuses > div:contains('+name+')').length;
-		if (bonuslength !== 0){
-			$('#bonuses > div:contains('+name+')').each( function() {
-				var id = $(this).attr('id').replace('b', '');
-				b[id] = newBonus(id);
+		var challengelength = $('#challenges > div:contains('+name+')').length;
+		if (challengelength !== 0){
+			$('#challenges > div:contains('+name+')').each( function() {
+				var id = $(this).attr('id').replace('c', '');
+				cb[id] = 1;
 			});
-			output[0] = pointsBase*bonuslength;
-			output[1] = ' '+name;
+			output[0] = pointsBase*challengelength;
+			if (challengelength > 1){
+				output[1] = '<span>'+name+' (+'+pointsBase+' x'+challengelength+')</span>';
+			} else {
+				output[1] = '<span>'+name+' (+'+pointsBase+')</span>';
+			}
 		}
 		return output;
 	}
@@ -127,9 +139,9 @@ function makeMove() {
 	var result = $('#result').text();
 	var oper = $('#oper').text();
 	var numb = $('#numb').text();
-	if ($('#oper').text() !== '?' && $('#numb').text() !== '?')
+	if ($('#oper').text() !== '' && $('#numb').text() !== '')
 		{
-			var output = 0, bonuses = '';
+			var output = 0, challenges = '';
 			result = Number (result);
 			numb = Number (numb);
 
@@ -145,51 +157,67 @@ function makeMove() {
 					break;
 			}
 
-			// Waga punktowa bonusów ['parzysta', 'nieparzysta', 'pierwsza', 'kwadrat', 'szescian', 'potęga 2', 'zero'];
-			var baseP = [3, 3, 6, 6, 6, 4, 3]
-			var bonustag ='';
+			// Waga punktowa wyzwań ['parzysta', 'nieparzysta', 'pierwsza', 'kwadrat', 'szescian', 'potęga 2', 'silnia', 'zero'];
+			var baseP = [3, 3, 6, 6, 6, 4, 4, 3]
+			var challengetag ='';
+			cb = [0, 0, 0];
 
 			if ( even(output) ) {
-				bonustag = bonusCount('l. parzysta', baseP[0]);
-				points += bonustag[0];
-				bonuses += bonustag[1];
-			}	else if ( odd(output) ) {
-				bonustag = bonusCount('l. nieparzysta', baseP[1]);
-				points += bonustag[0];
-				bonuses += bonustag[1];
+				challengetag = challengeCount('l. parzysta', baseP[0]);
+				points += challengetag[0];
+				challenges += challengetag[1];
+			}	else {
+				challengetag = challengeCount('l. nieparzysta', baseP[1]);
+				points += challengetag[0];
+				challenges += challengetag[1];
 			}
 
 			if ( prime(output) ) {
-				bonustag = bonusCount('l. pierwsza', baseP[2]);
-				points += bonustag[0];
-				bonuses += bonustag[1];
+				challengetag = challengeCount('l. pierwsza', baseP[2]);
+				points += challengetag[0];
+				challenges += challengetag[1];
 			}
 
 			if ( square(output) ) {
-				bonustag = bonusCount('kwadrat', baseP[3]);
-				points += bonustag[0];
-				bonuses += bonustag[1];
+				challengetag = challengeCount('kwadrat', baseP[3]);
+				points += challengetag[0];
+				challenges += challengetag[1];
 			}
 
 			if ( cube(output) ) {
-				bonustag = bonusCount('sześcian', baseP[4]);
-				points += bonustag[0];
-				bonuses += bonustag[1];
+				challengetag = challengeCount('sześcian', baseP[4]);
+				points += challengetag[0];
+				challenges += challengetag[1];
 			}
+
 			if ( binary(output) ) {
-				bonustag = bonusCount('potęga 2', baseP[5]);
-				points += bonustag[0];
-				bonuses += bonustag[1];
+				challengetag = challengeCount('potęga 2', baseP[5]);
+				points += challengetag[0];
+				challenges += challengetag[1];
 			}
 
-			if (output === 0){
-				bonustag = bonusCount('zero', baseP[6]);
-				points += bonustag[0];
-				bonuses += bonustag[1];
+			if ( factorial(output) ) {
+				challengetag = challengeCount('silnia', baseP[6]);
+				points += challengetag[0];
+				challenges += challengetag[1];
 			}
 
-			$('.head > p:first-child').remove();
-			$('.head > div').before('<p><strong>'+result+'</strong> '+oper+' '+numb+' = <strong>'+output+'</strong><span class="bonus">'+bonuses+'</span></p>');
+			if (output === 0) {
+				challengetag = challengeCount('zero', baseP[7]);
+				points += challengetag[0];
+				challenges += challengetag[1];
+			}
+
+			if (cb[0] === 1) {c[0] = newChallenge(0);}
+			if (cb[1] === 1) {c[1] = newChallenge(1);}
+			if (cb[2] === 1) {c[2] = newChallenge(2);}
+			if (3 === (cb[0]+cb[1]+cb[2])) {
+				points += 5;
+				challenges += '<span class="combo">COMBO! (+5)</span>';
+			}
+
+			$('.log').find('p:last-child').remove().end().find('p:last-child').remove();
+			$('.log').prepend('<p><strong>'+result+'</strong> '+oper+' '+numb+' = <strong>'+output+'</strong></p><p class="challenge">'+challenges+'</p>');
 			$('#result').empty().append(output);
 			$('#score').empty().append(points);
 			if (points > highscore){
@@ -205,26 +233,26 @@ function makeMove() {
 			}
 
 
-			$('#operator > div.selected').each( function() {
+			$('#operator > button.selected').each( function() {
 				var id = $(this).attr('id').replace('o', '');
 				o[id] = newOperator(id, result);
 				$(this).removeClass('selected');
-				$('#oper').empty().append('?');
+				$('#oper').empty();
 			});
 
-			$('#number > div.selected').each( function() {
+			$('#number > button.selected').each( function() {
 				var id = $(this).attr('id').replace('n', '');
 				n[id] = newNumber(id);
 				$(this).removeClass('selected');
-				$('#numb').empty().append('?');
+				$('#numb').empty();
 			});
 		}
 		}
 	}
 
   /* Wybór działania */
-  $('#operator > div').click(addOperator);
-	$('#number > div').click(addNumber);
+  $('#operator > button').click(addOperator);
+	$('#number > button').click(addNumber);
 	$('#confirm').click(makeMove);
 	$('#again').click(playAgain);
 	})();

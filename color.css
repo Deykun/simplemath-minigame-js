@@ -1,0 +1,60 @@
+body {
+	color: #fff;
+	background-color: #d7bc8a;
+}
+
+h2, .log {
+	color: #444;
+}
+
+#game {
+	background-color: #444;
+}
+/* Wyniki i rundy */
+.score {
+	color: #444;
+	background-color: #d7bc8a;
+}
+
+/* Zadania */
+.challenges div {
+	border-color: #d7bc8a;
+}
+
+/* Dymki zadań */
+[tooltip]:before {
+	color: #444;
+	background-color: #d7bc8a;
+}
+
+/* Przyciski */
+button {
+	border-color: #d7bc8a;
+	background-color:#d7bc8a;
+}
+
+button:hover, button.selected {
+	/*background: #ead2a5;*/
+	color: #fff;
+	border-color: #fff;
+	background: #444;
+}
+
+/* Ekran końcowy */
+.end, .end a {
+	color: #444;
+	border-color: #fff;
+	background-color: #d7bc8a;
+	text-decoration: none;
+}
+
+/* log gry */
+.challenge span {
+	color: #fff;
+	background-color: #444;
+}
+
+.challenge span.combo {
+	color: #444;
+	background-color: #fff;
+}

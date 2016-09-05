@@ -5,116 +5,180 @@
 }
 
 body {
-	font-family: 'Raleway', sans-serif;
-	text-align: center;
-	color: #fff;
-	background-color: #436f45;
+	padding-top: 25px;
 }
 
-#board {
+body, button {
+	font-family: 'Josefin Sans', sans-serif;
+	text-align: center;
+}
+
+#game {
 	position: relative;
-	width: 300px;
-	margin: auto;
-	margin-top: 20px;
+	width: 350px;
+	margin: 10px auto;
+	padding: 15px;
+	border-radius: 15px;
+}
+
+.boxes {
+	width: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
 }
 
 .boxes div {
-	display: inline-block;
-	height: 100px;
-	width: 100px;
-	border-radius: 2px;
-
-	transform: scale(0.85);
-
-	font-size: 40px;
-	line-height: 100px;
-}
-
-.box div {
-	height: 70px;
-	width: 300px;
-	margin: 1px auto;
-	border-radius: 2px;
-
-	transform: scale(0.85);
-
-	font-size: 40px;
-	line-height: 70px;
-}
-
-.bonuses div {
-	height: 40px;
-	font-size: 16px;
-	line-height: 40px;
-	color: #284c29;
-	background-color: #93c959;
-}
-.score div {
-	height: 60px;
-	font-size: 25px;
-	line-height: 30px;
-}
-
-.score p {
-	font-size: 16px;
-	line-height: 20px;
+  flex: 1 1 100px;
+	margin: 5px;
 }
 
 .head {
-	margin-top: 15px;
-}
-
-.head p {
-	width: 90%;
-	margin: 0 auto;
-	margin-bottom: 5px;
-
-	color: #fff;
+	padding: 10px;
 	text-align: left;
 }
 
-.head strong {
-color: #93c959;
+/* Wyniki i rundy */
+.score {
+	height: 40px;
+	border-radius: 10px;
+	line-height: 40px;
 }
 
-.bonus {
-	float: right;
-	font-size: 65%;
+.score p {
+	text-align: left;
 }
 
-.clickable > div {
-	background-color:#284c29;
-	transition: .1s ease-in-out;
+.score span {
+	float:right;
 }
 
-.clickable > div:hover {
+.scores p {
+	width: 90%;
+	margin: 0 auto;
+
+	font-size: 10px;
+}
+
+.score span, #rounds {
+	font-weight: 700;
+}
+
+.score span {
+	font-size: 18px;
+}
+
+#rounds {
+	font-size: 32px;
+}
+
+/* Zadania */
+#game p {
+	font-size: 12px;
+	margin-bottom: 4px;
+}
+
+.challenges div {
+	padding: 10px 0;
+
+	border-radius: 10px;
+	border: 3px dashed;
+
+	cursor: help;
+}
+
+/* Dymki zadań */
+[tooltip]:before {
+    content: attr(tooltip);
+    position: absolute;
+    opacity: 0;
+
+    padding: 10px;
+		border-radius: 5px;
+
+		font-size: 11px;
+
+		transition: all 0.30s ease;
+}
+
+[tooltip]:hover:before {
+    opacity: 1;
+    margin-top: 20px;
+}
+
+[tooltip]:not([tooltip-persistent]):before {
+    pointer-events: none;
+}
+
+/* Wynik */
+.head {
+	font-size: 21px;
+}
+
+#result {
+	font-size: 41px;
+}
+
+/* Przyciski */
+button:focus {outline:0;}
+
+button {
+	margin: 10px;
+	height: 70px;
+
+	border-radius: 10px;
+	border: 3px dashed;
+
+	font-size: 40px;
+	line-height: 64px;
+
 	cursor: pointer;
-	transform: scale(1);}
-
-div.selected {
-	background-color:#29432a;
+	transition: .2s ease-in-out;
 }
 
-#oper, #numb {
-	margin-left: 15px;
-	vertical-align:middle;
-	color: #93c959;
-	font-size: 65%;
+.boxes button {
+	width: 70px;
+}
+.box button {
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
+button:hover, button.selected {
+	transform: scale(1.2);}
+
+/* Ekran końcowy */
 .end {
 	position: absolute;
+	z-index: 100;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(-50%,-50%);
 
-	width: 220px;
-	padding: 15px;
+	width: 70%;
+	padding: 10px 10px;
 	border-radius: 15px;
-	background-color: #93c959;
+	border: 3px dashed;
 }
 
-a {
-	color: #fff;
-	text-decoration: none;
+/* log gry */
+.log p {
+	width: 300px;
+	margin: 5px auto 0 auto;
+
+	text-align: center;
+}
+
+p.challenge {
+	font-size: 15px;
+}
+
+.challenge span {
+	display: inline-block;
+
+	padding: 5px;
+	margin: 5px;
+
+	border-radius: 5px;
 }
